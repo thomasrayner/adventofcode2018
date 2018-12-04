@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -21,6 +22,7 @@ namespace day3
             int CanvasSize = 2048;
             string[,] Canvas = new string[CanvasSize, CanvasSize];
             int OverlapCount = 0;
+            var ClaimTracker = new HashSet<string>();
 
             foreach (string Line in Lines)
             {
@@ -30,10 +32,20 @@ namespace day3
                 int[] Offset = new int[] { Convert.ToInt32(OffsetString[0]), Convert.ToInt32(OffsetString[1]) };
                 int[] Area = new int[] { Convert.ToInt32(AreaString[0]), Convert.ToInt32(AreaString[1]) };
 
+                ClaimTracker.Add(Id);
+
                 for (int i = Offset[0]; i < Offset[0] + Area[0]; i++)
                 {
                     for (int j = Offset[1]; j < Offset[1] + Area[1]; j++)
                     {
+                        if (Canvas[i,j] != null)
+                        {
+                            ClaimTracker.Remove(Id);
+                            foreach (string Overlap in Canvas[i,j].Split(',').Where(x => x != String.Empty))
+                            {
+                                ClaimTracker.Remove(Overlap);
+                            }
+                        }
                         Canvas[i, j] += $"{Id},";
                     }
                 }
@@ -50,15 +62,11 @@ namespace day3
                         {
                             OverlapCount++;
                         }
-                        if (Ids.Where(x => x != String.Empty).Count() == 1)
-                        {
-                            Console.WriteLine($"No overlap for ID: {Canvas[i, j]}");
-                        }
                     }
                 }
             }
 
-            Console.WriteLine($"OverlapCount: {OverlapCount}");
+            Console.WriteLine($"OverlapCount: {OverlapCount}. Clean claim: {string.Join("", ClaimTracker)}");
             Console.ReadKey();
         }
     }
