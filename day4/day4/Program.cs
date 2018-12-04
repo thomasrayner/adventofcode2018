@@ -90,13 +90,16 @@ namespace day4
 
             foreach (DictionaryEntry row in GuardAnalysis)
             {
-                Console.WriteLine($"Guard: {row.Key} Number of minutes: {((List<int>)row.Value).Count}");
+                int MostSleptThisGuard = ((List<int>)row.Value).GroupBy(x => x).OrderByDescending(y => y.Count()).Select(z => z.Key).FirstOrDefault();
+                int TimesSlept = ((List<int>)row.Value).Where(x => x == MostSleptThisGuard).Count();
                 if (((List<int>)row.Value).Count > MostMinutes)
                 {
                     MostMinutes = ((List<int>)row.Value).Count;
                     SleepiestGuard = Convert.ToInt32(row.Key);
-                    MostSleptMinute = ((List<int>)row.Value).GroupBy(x => x).OrderByDescending(y => y.Count()).Select(z => z.Key).FirstOrDefault();
+                    MostSleptMinute = MostSleptThisGuard;
                 }
+
+                Console.WriteLine($"Guard: {row.Key} Number of minutes: {((List<int>)row.Value).Count} - their most slept minute: {MostSleptThisGuard} at {TimesSlept} (product: {Convert.ToInt32(SleepiestGuard) * MostSleptThisGuard})");
             }
 
             Console.WriteLine($"The sleepiest guard is {SleepiestGuard} with {MostMinutes} slept. Their most slept minute is {MostSleptMinute}. The product of these numbers is {Convert.ToInt32(SleepiestGuard) * MostSleptMinute}");
