@@ -22,16 +22,28 @@ namespace day5
 
             foreach (string Line in Lines)
             {
-                string Reduced = ReduceString(Line);
-                int Before = 0;
-                int After = 1;
-                while (Before != After)
+                int Smallest = Line.Length;
+                for (char c = 'A'; c <= 'Z'; c++)
                 {
-                    Before = Reduced.Length;
+                    string Reduced = Line.Replace(c.ToString(), null);
+                    Reduced = Reduced.Replace(char.ToLower(c).ToString(), null);
                     Reduced = ReduceString(Reduced);
-                    After = Reduced.Length;
+                    int Before = 0;
+                    int After = 1;
+                    while (Before != After)
+                    {
+                        Before = Reduced.Length;
+                        Reduced = ReduceString(Reduced);
+                        After = Reduced.Length;
+                    }
+
+                    if (Reduced.Length < Smallest)
+                        Smallest = Reduced.Length;
+                    
+                    Console.WriteLine($"Reduced String Length after removing {c}: {Reduced.Length}");
                 }
-                Console.WriteLine($"Reduced String Length: {Reduced.Length}");
+
+                Console.WriteLine($"Smallest String Length: {Smallest}");
             }
 
             Console.ReadKey();
