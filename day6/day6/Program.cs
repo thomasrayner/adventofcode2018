@@ -26,6 +26,7 @@ namespace day6
             int MaxX = 0;
             int MaxY = 0;
             int LargestArea = 0;
+            int RegionSize = 0;
 
             foreach (string Line in Lines)
             {
@@ -115,8 +116,22 @@ namespace day6
                     LargestArea = ((int)Row.Value);
                 }
             }
-            Console.WriteLine($"The largest size that isn't infinite is {LargestArea}");
 
+            for (int i = 0; i < Matrix.Count(); i++)
+            {
+                for (int j = 0; j < Matrix[0].Count(); j++)
+                {
+                    int TotalDistance = 0;
+                    for (int k = 0; k < Points.Count(); k++)
+                    {
+                        TotalDistance += CalculateManDistance(i, j, Points[k][0], Points[k][1]);
+                    }
+                    if (TotalDistance < 10000)
+                        RegionSize++;
+                }
+            }
+
+            Console.WriteLine($"The largest size that isn't infinite is {LargestArea}. The safe region size is {RegionSize}");
             Console.ReadKey();
         }
 
