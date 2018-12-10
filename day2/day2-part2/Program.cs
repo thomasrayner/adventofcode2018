@@ -30,7 +30,7 @@ namespace day2_part2
 
                         if (SameChars.Count() == Lines[i].Count() - 1)
                         {
-                            Console.WriteLine($"The key is {SameChars.ToString()} (from {Lines[i]} and {Lines[j]}");
+                            Console.WriteLine($"The key is {String.Join("", SameChars)} (from {Lines[i]} and {Lines[j]}");
                             FoundKey = true;
                         }
                     }
