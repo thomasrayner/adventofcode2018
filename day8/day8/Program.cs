@@ -52,6 +52,8 @@ namespace day8
                 int Index = 0;
                 Node Root = ReadNode(Numbers, ref Index);
                 Console.WriteLine($"Part 1 metadata sum: {Root.MetadataSum()}");
+
+                Console.WriteLine($"Part 2 value: {Root.Value()}");
             }
 
             Console.ReadKey();
