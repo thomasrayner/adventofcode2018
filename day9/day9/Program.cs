@@ -9,7 +9,8 @@ namespace day9
     class Program
     {
         static int PlayerCount = 423; // From input
-        static int MarblePoint = 71944; // From input
+        //static int MarblePoint = 71944; // From input - pt 1 
+        static int MarblePoint = 71944 * 100; // From input - pt 2
 
         static long[] Scores = new long[PlayerCount];
         static LinkedList<int> PlacedMarbles = new LinkedList<int>();
