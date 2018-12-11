@@ -1,0 +1,1 @@
+Your puzzle input is 7400.
